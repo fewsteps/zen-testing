@@ -1,0 +1,108 @@
+{{ define "main" -}}
+<main class="main layout__main">
+    <article class="single-view{{ with .Section }} single-view--{{ . | urlize }}{{ end }}">
+        <header>
+            <h1 class="title {{ if $.Param " submitted" | default false }}title-submitted{{ end }}">{{ .Title }}</h1>
+            {{ if $.Param "submitted" | default false }}{{ partial "submitted.html" . }}{{ end -}}
+            {{ if .Params.tags }}{{ partial "tags.html" . }}{{ end -}}
+        </header>
+        <div class="content">
+            {{< search>}}
+                {{ .Content }}
+        </div>
+
+        {{< search>}}
+            {{ with .Params.address }}
+            <h2>Address</h2> {{.}}
+            {{ end }}
+
+            {{ with .Params.district }}
+            <h2>District</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.zip }}
+            <h2>Zipcode</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.country }}
+            <h2>Country</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.fb }}
+            <h2>Facebook</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.phone }}
+            <h2>Phone</h2> {{ . | safeHTML}}
+            {{ end }}
+
+            {{ with .Params.mobile }}
+            <h2>Mobile</h2>{{. | safeHTML}}
+            {{ end }}
+
+            {{ with .Params.email }}
+            <h2>Email</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.web }}
+            <h2>Website</h2>{{.}}
+            {{ end }}
+
+            {{ with .Params.fax }}
+            <h2>Fax</h2>{{. | safeHTML}}
+            {{ end }}
+
+            {{ with .Params.hour }}
+            <h2>Business Hours:</h2>{{.}}
+            {{ end }}
+
+            <!-- {{ with .Params.xdescription }}
+        <h2>Description</h2>
+        <ul>
+            {{ range . }}
+            <li> {{.}}</li>
+            {{ end }}
+        </ul>
+        {{ end }} -->
+
+            {{ with .Params.xdescription}}
+            <h2>About this business: </h2>
+            <ul>
+                {{ range after 1 . }}
+                <li>
+                    {{ . }}
+                    {{ end }}
+                </li>
+            </ul>
+            {{ end }}
+
+
+
+            <!-- {{ $myitems := .Params.xdescription }}
+        {{ range $i, $e := $myitems }}
+        {{ if gt $i 1 }}
+        <p>{{ $e }}</p>
+        {{ end }}
+        {{ end }} -->
+
+
+            <!-- {{ $myitems := .Params.xdescription }}
+        {{ range $i, $e := $myitems }}
+        {{ if gt $i 2 }}
+        <p>{{ $e }}</p>
+        {{ end }}
+        {{ end }} -->
+
+
+
+
+
+
+            <div class="content content--bottom">
+                {{ if $.Param "relatedposts" | default true }}{{ partial "related.html" . }}{{ end -}}
+
+                {{ if ne .Lastmod .Date }}{{ partial "dates.html" . }}{{ end -}}
+            </div>
+    </article>
+</main>
+{{ end }}
